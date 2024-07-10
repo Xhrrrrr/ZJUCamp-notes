@@ -70,7 +70,7 @@ OS: Ubuntu 20.04.3 LTS
 
    the results:
 
-  ![image-20240708161553281](.\img\java8res.jpeg)
+  ![image-20240708161553281](./img/java8res.jpeg)
 
   **tips**: 
 
