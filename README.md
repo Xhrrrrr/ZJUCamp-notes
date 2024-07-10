@@ -46,7 +46,7 @@ OS: Ubuntu 20.04.3 LTS
 
    **tips**: 
 
-   make sure that  `JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/` rather than `JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/bin/java`
+   make sure that  `JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64` rather than `JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/bin/java`
 
 3. Install SPECjvm2008
 
@@ -91,50 +91,53 @@ Java SE 6
 
 5. Other questions
 
-**Q1**: 
+   **Q1**: 
 
-What is the performance metric of SPECjvm2008? Why? What are the units of meas urements?
+   What is the performance metric of SPECjvm2008? Why? What are the units of meas urements?
 
-**A**: 
+   **A**: 
 
-   Each SPECjvm2008 sub-benchmark produces a result in **ops/min (operations per minute)** that reflects the rate at which the system was able to complete invocations of the workload of that sub-benchmark.  At the conclusion of a run, SPECjvm2008 computes a single quantity intended to reflect the overall performance of the system on all the sub-benchmarks executed during the run. The basic method used to compute the combined result is to **compute a geometric mean**.
+   Each SPECjvm2008 sub-benchmark produces a result in **ops/min (operations per minute)** that reflects the rate at which the system was able to complete invocations of the workload of that sub-benchmark.  At the conclusion of a run, 
+   SPECjvm2008 computes a single quantity intended to reflect the overall performance of the system on all the sub-benchmarks executed during the run. The basic method used to compute the combined result is to **compute a geometric mean**.
 
-   In order to include multiple sub-benchmarks that represent the same general application area while still treating various application areas equally, an intermediate result is computed for certain groups of the sub-benchmarks before they are combined into the overall throughput result. In particular, for these groups of sub-benchmarks
+   In order to include multiple sub-benchmarks that represent the same general application area while still treating various application areas equally, an intermediate result is computed for certain groups of the sub-benchmarks before they are 
+   combined into the overall throughput result. In particular, for these groups of sub-benchmarks
 
-- COMPILER: compiler.compiler, compiler.sunflow
-- CRYPTO: crypto.aes, crypto.rsa, crypto.signverify
-- SCIMARK: scimark.fft.large, scimark.lu.large, scimark.sor.large, scimark.sparse.large, scimark.fft.small, scimark.lu.small, scimark.sor.small, scimark.sparse.small, scimark.monte_carlo
-- STARTUP: {all sub-benchmarks having names beginning with startup. } See Appendix A for the complete list.
-- XML: xml.transform, xml.validation
+   - COMPILER: compiler.compiler, compiler.sunflow
+   - CRYPTO: crypto.aes, crypto.rsa, crypto.signverify
+   - SCIMARK: scimark.fft.large, scimark.lu.large, scimark.sor.large, scimark.sparse.large, scimark.fft.small, scimark.lu.small, scimark.sor.small, scimark.sparse.small, scimark.monte_carlo
+   - STARTUP: {all sub-benchmarks having names beginning with startup. } See Appendix A for the complete list.
+   - XML: xml.transform, xml.validation
 
 ​	the geometric mean of sub-benchmark results in each group is computed. The overall throughput result is then computed as the geometric mean of these group results and the results from the other sub-benchmarks.
 
-**Q2**:  
+   **Q2**:  
 
-What factors affect the scores? Why some get higher scores, but others get lower s cores?
+   What factors affect the scores? Why some get higher scores, but others get lower s cores?
 
-**A**: 
+   **A**: 
 
-**JVM Difference:** Different JVMs have varying optimizations, garbage collection algorithms and other features
+   **JVM Difference:** Different JVMs have varying optimizations, garbage collection algorithms and other features
 
-**Hardware Configuration:** CPU speed, number of cores, memory size, and I/O capabilities can significantly impact performance.
+   **Hardware Configuration:** CPU speed, number of cores, memory size, and I/O capabilities can significantly impact performance.
 
-**System Status:** Background processes and other running applications can affect the JVM’s ability to allocate resources efficiently.
+   **System Status:** Background processes and other running applications can affect the JVM’s ability to allocate resources efficiently.
 
-**OS Settings:** The operating system’s configuration, including the CPU governor and I/O scheduler, can impact performance.
+   **OS Settings:** The operating system’s configuration, including the CPU governor and I/O scheduler, can impact performance.
 
-   Higher scores are generally achieved by JVMs that have better optimization and tuning for the specific workload being tested, such as more efficient garbage collection, better JIT compilation, and optimized runtime libraries contribute to higher scores. Lower scores can result from inefficient handling of these aspects or from less powerful hardware configurations.
+   Higher scores are generally achieved by JVMs that have better optimization and tuning for the specific workload being tested, such as more efficient garbage collection, better JIT compilation, and optimized runtime libraries contribute to 
+   higher scores. Lower scores can result from inefficient handling of these aspects or from less powerful hardware configurations.
 
-**Q3**: 
+   **Q3**: 
 
    Why is warmup required in SPECjvm2008, and does warmup time have any impact on performance test results?
 
-**A**:
+   **A**:
 
-In the `ProgramRunner.java`
+   In the `ProgramRunner.java`
 
-```java
-if (bmResult.getWarmupTime() > 0) {
+   ```java
+   if (bmResult.getWarmupTime() > 0) {
                 IterationResult itResult = new IterationResult();
                 itResult.setBenchmarkResult(bmResult);
                 itResult.setExpectedDuration(bmResult.getWarmupTime());
@@ -155,21 +158,23 @@ if (bmResult.getWarmupTime() > 0) {
                     }
                 }
             }
-```
+   ```
 
-   It can be seen that a warmup iteration is ran before the benchmarking iterations, and I believe the warmup activity is used to **prepare the JVM**, ensuring it is running optimally before the following benchmarking iterations. Besides, the warmup results are used to **adjust the iteration time if necessary**, ensuring the benchmarking runs are long enough to provide meaningful results.
+  It can be seen that a warmup iteration is ran before the benchmarking iterations, and I believe the warmup activity is used to **prepare the JVM**, ensuring it is running optimally before the following benchmarking iterations. Besides, the 
+  warmup results are used to **adjust the iteration time if necessary**, ensuring the benchmarking runs are long enough to provide meaningful results.
 
-   Adequate warmup time ensures that JIT compilation, class loading, and garbage collection have **settled into a steady state**, and as a result, this leads to more accurate and consistent performance measurements, reflecting the true capabilities of the JVM.
+   Adequate warmup time ensures that JIT compilation, class loading, and garbage collection have **settled into a steady state**, and as a result, this leads to more accurate and consistent performance measurements, reflecting the true 
+   capabilities of the JVM.
 
-**Q4**: 
+   **Q4**: 
 
-Did you get close to 100% CPU utilization running SPECjvm2008? Why or why not?
+   Did you get close to 100% CPU utilization running SPECjvm2008? Why or why not?
 
-**A**:
+   **A**:
 
    I got **close to 100% CPU utilization** when running the compress benchmark. The reason may be due to that the task heavily relies on computational power.
 
-![image-20240708194049296](./img/cpuUtilization.png)
+   ![image-20240708194049296](./img/cpuUtilization.png)
 
 ## Assignment 2: Software Performance Evaluation
 
@@ -302,11 +307,14 @@ Did you get close to 100% CPU utilization running SPECjvm2008? Why or why not?
 
    The run to run performance variation may typically due to the following reasons.
 
-   **JVM Difference:** Different JVMs have varying optimizations, garbage collection algorithms and other features. In my experiments, I believe this is one of the reasons why performance of different jdks varied. Though all the jdks are of version 1.8, SPECjvm benchmarks are run on different jvms. 
+   **JVM Difference:** Different JVMs have varying optimizations, garbage collection algorithms and other features. In my experiments, I believe this is one of the reasons why performance of different jdks varied. Though all the jdks are of 
+   version 1.8, SPECjvm benchmarks are run on different jvms. 
 
-   **Hardware:** CPU speed, number of cores, memory size, and I/O capabilities can significantly impact performance. This might not contribute to the performance variation in my experiments, as all the tasks are run on the same machine with the same configuration. However, it's inevitable that the temperature of CPU and other hardwares may rise during the experiments, causing the performance of the these hardwares vary from run to run.
+   **Hardware:** CPU speed, number of cores, memory size, and I/O capabilities can significantly impact performance. This might not contribute to the performance variation in my experiments, as all the tasks are run on the same machine with 
+   the same configuration. However, it's inevitable that the temperature of CPU and other hardwares may rise during the experiments, causing the performance of the these hardwares vary from run to run.
 
-   **System Status and workload:** Background processes and other running applications can affect the JVM’s ability to allocate resources efficiently. When I was running the benchmark, I use the command `top`to ensure no other process and application is running.
+   **System Status and workload:** Background processes and other running applications can affect the JVM’s ability to allocate resources efficiently. When I was running the benchmark, I use the command `top`to ensure no other process and 
+   application is running.
 
    **Testing command**: The command to run the benchmark contains important arguments. For example, user can assign heap size for jvm. However in my experiment I didn't assign heap space for jvm, which may cause variation.
 
@@ -393,7 +401,8 @@ Did you get close to 100% CPU utilization running SPECjvm2008? Why or why not?
 
    For one reason, the hierarchical geometric mean provides a better measure of central tendency for normalized scores and reduces the influence of outliers, giving a more accurate representation of typical performance.
 
-   For another reason, as shown in the paper, the hierarchical geometric mean method hierarchical means incorporate cluster analysis to amortize the negative effect of workload redundancy. It can not only improve the accuracy and robustness of the score, but also improve the objectiveness over the weight-based approach.
+   For another reason, as shown in the paper, the hierarchical geometric mean method hierarchical means incorporate cluster analysis to amortize the negative effect of workload redundancy. It can not only improve the accuracy and robustness of 
+   the score, but also improve the objectiveness over the weight-based approach.
 
    
 
