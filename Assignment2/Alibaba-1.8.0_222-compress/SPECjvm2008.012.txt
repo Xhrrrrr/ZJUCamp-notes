@@ -1,0 +1,93 @@
+================================
+SPECjvm2008 Peak
+================================
+n/a n/a
+Alibaba OpenJDK 64-Bit Server VM
+Tested by: n/a Test date: Mon Jul 08 09:00:23 UTC 2024
+Run is valid, but not compliant
+
+================================
+compress                      262.47                                  
+Noncompliant composite result: 262.47 ops/m
+================================
+
+
+Submitter                     n/a                                     
+Submitter URL                 n/a                                     
+SPEC license                  n/a                                     
+Tester                        root                                    
+Location                      n/a                                     
+Test date:                    Mon Jul 08 09:00:23 UTC 2024            
+OS name                       Linux                                   
+OS available                  n/a                                     
+OS address bits               n/a                                     
+OS tuning                                                             
+Filesystem                    n/a                                     
+Other s/w name                                                        
+Other s/w tuning                                                      
+Other s/w available                                                   
+Vendor                        Alibaba                                 
+Vendor URL                    http://www.alibabagroup.com             
+JVM name                      OpenJDK 64-Bit Server VM                
+JVM version                   25.222-b10 mixed mode                   
+JVM available                 n/a                                     
+Java Specification            1.8                                     
+JVM address bits              64                                      
+JVM initial heap memory       n/a                                     
+JVM maximum heap memory       n/a                                     
+JVM command line              n/a                                     
+JVM command line startup                                              
+JVM launcher startup          default                                 
+Additional JVM tuning                                                 
+JVM class path                SPECjvm2008.jar                         
+JVM boot class path           /usr/lib/jvm/j2sdk-image/jre/lib/resources.jar:/usr/lib/jvm/j2sdk-image/jre/lib/rt.jar:/usr/lib/jvm/j2sdk-image/jre/lib/sunrsasign.jar:/usr/lib/jvm/j2sdk-image/jre/lib/jsse.jar:/usr/lib/jvm/j2sdk-image/jre/lib/jce.jar:/usr/lib/jvm/j2sdk-image/jre/lib/charsets.jar:/usr/lib/jvm/j2sdk-image/jre/lib/jfr.jar:/usr/lib/jvm/j2sdk-image/jre/classes
+HW vendor                     n/a                                     
+HW vendor's URL               n/a                                     
+HW model                      n/a                                     
+HW available                  n/a                                     
+CPU vendor                    n/a                                     
+CPU vendor's URL              n/a                                     
+CPU name                      n/a                                     
+CPU frequency                 n/a                                     
+# of logical cpus             n/a                                     
+# of chips                    n/a                                     
+# of cores                    n/a                                     
+Cores per chip                n/a                                     
+Threads per core              n/a                                     
+Threading enabled             n/a                                     
+HW address bits               n/a                                     
+Primary cache                 n/a                                     
+Secondary cache               n/a                                     
+Other cache                   n/a                                     
+Memory size                   n/a                                     
+Memory details                n/a                                     
+Other HW details              n/a                                     
+
+Property specjvm.maxiter must be 1 for publication.
+Property specjvm.miniter must be 1 for publication.
+Not a compliant sequence of benchmarks for publication.
+Property specjvm.run.checksum.validation must be true for publication.
+
+specjvm.benchmark.warmup.time=60
+
+Details of Runs
+---------------
+PASSED
+
+Benchmark                     Iteration      Expected(ms)   Actual(ms)     Operations     ops/m          
+---------------------------------------------------------------------------------------------------
+
+compress                      warmup         60000          60000          257.16         257.16         
+compress                      iteration 1    240000         240000         1046.04        261.51         
+compress                      iteration 2    240000         240000         1047.99        262.00         
+compress                      iteration 3    240000         240000         1049.89        262.47         
+compress                      iteration 4    240000         240000         1048.21        262.05         
+compress                      iteration 5    240000         240000         1048.40        262.10         
+compress                      iteration 6    240000         240000         1047.09        261.77         
+compress                      iteration 7    240000         240000         1047.35        261.84         
+compress                      iteration 8    240000         240000         1046.00        261.50         
+compress                      iteration 9    240000         240000         1046.70        261.68         
+compress                      iteration 10   240000         240000         1047.80        261.95         
+
+SPECjvm2008 Version: [SPECjvm2008 1.01 (20090519)]
+Copyright (C) 2008-2024 SPEC. All rights reserved
