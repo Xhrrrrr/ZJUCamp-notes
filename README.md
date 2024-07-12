@@ -574,7 +574,7 @@ OS: Linux LAPTOP-8BP4FCPK 5.15.153.1-microsoft-standard-WSL2
    
    ![Original](./img/Original.png)
    
-   DataProcessorOptimized (StringBuilder):
+   **DataProcessorOptimized (StringBuilder)**:
    
    command:
    
@@ -625,11 +625,11 @@ OS: Linux LAPTOP-8BP4FCPK 5.15.153.1-microsoft-standard-WSL2
     }
    ```
    
-   generate flame grapth:
+   **Generate flame grapth**:
    
    ![Optimal](./img/Optimal.png)
    
-   By observing the two graph we can find that there are more and separated peaks in the area of the original graph, indicating several methods consuming considerable CPU resources. The area in the optimal graph shows more focused peaks indicating optimized CPU usage and fewer distinct peaks suggest better CPU distribution and optimized method execution. 
+   By observing the two graph we can find that there are more and separated peaks in the area of the original graph, indicating several methods consuming considerable CPU resources. The area in the Optimized graph shows more focused peaks indicating optimized CPU usage and fewer distinct peaks suggest better CPU distribution and optimized method execution. 
    
    The flame graphs illustrate that the optimization has successfully concentrated CPU usage into fewer, more critical methods, reducing the overall CPU consumption and improving application performance.
    
