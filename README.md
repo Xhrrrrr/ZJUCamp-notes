@@ -45,7 +45,7 @@ OS: Ubuntu 20.04.3 LTS
 
    use `java -version` in terminal to check whether java is available
 
-   **tips**: 
+   **Tips**: 
 
    make sure that  `JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64` rather than `JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/bin/java`
 
@@ -57,7 +57,7 @@ OS: Ubuntu 20.04.3 LTS
 
    follow the instructions in the terminal to finish installation
 
-   **tips**: 
+   **Tips**: 
 
    only Java 8 or lower is able to run the command, otherwise you may get an error of unable to read the jre file, so make sure your Java version is under 8
 
@@ -72,7 +72,7 @@ OS: Ubuntu 20.04.3 LTS
 
   ![image-20240708161553281](./img/java8res.jpeg)
 
-  **tips**: 
+  **Tips**: 
 
    - many failure cases occurred in this process. The `startup.compiler.sunflow` is unable to  run. According to the official document, this is due to Java SE 8
 
@@ -421,7 +421,7 @@ OS: Linux LAPTOP-8BP4FCPK 5.15.153.1-microsoft-standard-WSL2
    make WERROR=0
    $sudo cp perf /usr/bin
    ```
-   **tips**:
+   **Tips**:
    - If you are trying to install `perf` on a none-WSL environment, try `apt install linux-tools-common`, and make sure that the `perf` tool version is the same with your liunx kernel, otherwise you will get an error.
 
    - Make sure you put `WERROR=0` behine `make`, otherwise the `make` will treat warning as error and stop making files.
@@ -472,8 +472,42 @@ OS: Linux LAPTOP-8BP4FCPK 5.15.153.1-microsoft-standard-WSL2
 
    ![FlameGraph](./img/FlameGraph.png)
 
-In this graph, `[libjvm.so]` is the dominant function. libjvm.so is the core library file of Java virtual machine. It contains the core code and runtime library of JVM. In Java applications, the libjvm.so library file is usually provided by the Java Runtime Environment (JRE) or Java Development Kit (JDK). When a Java application starts, the JVM loads the libjvm.so library file and uses the code and libraries in it to execute the Java program.
-
+   In this graph, `[libjvm.so]` is the dominant function. libjvm.so is the core library file of Java virtual machine. It contains the core code and runtime library of JVM. In Java applications, the libjvm.so library file is usually provided by the Java Runtime Environment (JRE) or Java Development Kit (JDK). When a Java application starts, the JVM loads the libjvm.so library file and uses the code and libraries in it to execute the Java program.
+   
+   **SQLite**:
+   
+   Record the data in perf_data to `perf_data.txt` using the `perf script` command  and insert information into SQLite to further analyze.
+   
+   ```
+   perf script -i perf.data > perf_data.txt
+   ```
+   Download SQLite and create database:
+   ```
+   apt install sqlite3
+   sqlite3 perf_data.db
+   ```
+   Create two tables `perf_header` and `perf_stack`, the structures are as follow:
+   
+   ![sqlHead](./img/sqlHead.png)
+   
+   ![sqlstack](./img/sqlstack.png)
+   
+   Run the `sqlAnalyze.py` to insert data into database and generate analytical results.
+   
+   ![topfunction](./img/topfunction.png)
+   
+   **Lspec/benchmarks/crypto/aes/Main;::runEncryptDecrypt** has count of 93584. This suggests that the encryption/decryption routines in the benchmark are heavily utilized. **Lspec/harness/BenchmarkThread;::runLoop** and **JavaCalls::call_helper** also have high execution counts of 93588. This indicates that the benchmark's main loop and Java method calls are frequently executed.
+   
+   ![duration](./img/duration.png)
+   
+   The average and total times associated with **Lspec/benchmarks/crypto/aes/Main;::runEncryptDecrypt** provide insights into the performance of the algorithm within the context of the application. High times could indicate that the cryptographic operations are computationally expensive or that there are opportunities for optimization.
+   
+   ![corrolatedev](./img/corrolatedev.png)
+   
+   **Tips**:
+   
+   When I was trying to run the `sqlAnalyze.py`, an error occurs `sqlite3.OperationalError: table perf_data has no column named comm`. As I debug, I found that when passing the path of the `.db` file,  **use absolute path  instead of relative path**.
+   
 4. Other questions
 
    **Q1**: 
